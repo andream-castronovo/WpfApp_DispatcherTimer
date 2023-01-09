@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace WpfApp_DispatcherTimer
 {
@@ -20,9 +21,28 @@ namespace WpfApp_DispatcherTimer
     /// </summary>
     public partial class MainWindow : Window
     {
+        DispatcherTimer _dt;
+
         public MainWindow()
         {
             InitializeComponent();
+            SetupTimer();
+        }
+
+        void SetupTimer()
+        {
+            _dt = new DispatcherTimer();
+            _dt.Interval = TimeSpan.FromMilliseconds(50);
+            _dt.Tick += new EventHandler(DispatcherTimer_Tick);
+            _dt.Start();
+        }
+
+
+        int _i = 0;    
+        void DispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            _i++;
+            txtContatore.Text = _i + "";
         }
     }
 }
